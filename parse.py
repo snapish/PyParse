@@ -4,7 +4,6 @@
 import sys 
 import argparse
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser.add_argument('--inorder',  help="Only return words that have the arguments in order given")
     args = [] #for storing arguments
     goodWord = True #flag for later
     for x in (sys.argv[1:]): #loop thru args, ignoring the first, which is the script name
@@ -12,10 +11,13 @@ if __name__ == "__main__":
     wordsFile = open("words.txt","r") 
     words = wordsFile.read().splitlines() #set words to a list, each entry is separated by a line break
     for word in words: #for every word
-        goodWord = True #resets the flag on each new word check
+        goodWord = True #resets the flag on each new word check    
         for arg in args: #for every argument
             if arg not in word: #if the word doesnt contain the argument
                 goodWord = False #do not print the word
-        if goodWord:   
+                
+        if goodWord:        
             print(word)
     wordsFile.close()
+
+     #if all(c in word for c in args):

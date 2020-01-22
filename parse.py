@@ -14,11 +14,17 @@ if __name__ == "__main__":
         # Recursion applied till last element 
         return arr[0]<= arr[1] and arraySortedOrNot(arr[1:]) 
 
+    #parser.add_argument('--sum', dest='accumulate', action='store_const', const=sum, default=max, help='Sets the max number of letters it can have')
     args = [] #for storing arguments
     indicies = [] #storing what index the string checker is at
+    maxLength = 0
     goodWord = True #flag for later
     for x in (sys.argv[1:]): #loop thru args, ignoring the first, which is the script name
-        args.append(x) # add to arg list
+        if x.isnumeric():
+            maxLength = int(x)
+        else:
+            args.append(x) # add to arg list
+
     wordsFile = open("words.txt","r") 
     words = wordsFile.read().splitlines() #set words to a list, each entry is separated by a line break
     for word in words: #for every word
@@ -28,12 +34,13 @@ if __name__ == "__main__":
                 indicies.append(word.find(arg))
             if arg not in word: #if the word doesnt contain the argument
                 goodWord = False #do not print the word
-            #if list is not in order good word = false
             if not arraySortedOrNot(indicies):
                 goodWord = False
         indicies = []  #clear the array
-        if goodWord:        
-           print(word)
+        if goodWord and maxLength == 0:
+            print(word)
+        elif goodWord and maxLength > 0 and len(word) == maxLength: 
+            print(word)
     wordsFile.close()
 
      #if all(c in word for c in args):

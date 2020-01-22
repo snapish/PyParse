@@ -4,12 +4,16 @@
 import sys 
 import argparse
 if __name__ == "__main__":
-    def check(list1, val): 
-        for x in list1: 
-            if val <= x: 
-                return False 
-        return True
-      
+    def arraySortedOrNot(arr):   
+        # Calculating length 
+        n = len(arr) 
+        # Array has one or no element or the 
+        # rest are already checked and approved. 
+        if n == 1 or n == 0: 
+            return True     
+        # Recursion applied till last element 
+        return arr[0]<= arr[1] and arraySortedOrNot(arr[1:]) 
+
     args = [] #for storing arguments
     indicies = [] #storing what index the string checker is at
     goodWord = True #flag for later
@@ -19,14 +23,17 @@ if __name__ == "__main__":
     words = wordsFile.read().splitlines() #set words to a list, each entry is separated by a line break
     for word in words: #for every word
         goodWord = True #resets the flag on each new word check    
-        for ind, arg in enumerate(args, start=0): #for every argument
+        for arg in args: #for every argument
             if word.find(arg) != -1:
                 indicies.append(word.find(arg))
-            if arg not in word and check(indicies, word.find(arg)) : #if the word doesnt contain the argument
+            if arg not in word: #if the word doesnt contain the argument
                 goodWord = False #do not print the word
+            #if list is not in order good word = false
+            if not arraySortedOrNot(indicies):
+                goodWord = False
         indicies = []  #clear the array
         if goodWord:        
-            print(word)
+           print(word)
     wordsFile.close()
 
      #if all(c in word for c in args):
